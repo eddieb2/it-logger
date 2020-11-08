@@ -17,10 +17,14 @@ const TechDB = require('../models/TechsModel');
 router.post(
 	'/',
 	[
-		check('firstName', 'Please enter a first name.')
-			.not()
-			.isEmpty(),
-		check('lastName', 'Please enter a last name.'),
+		check(
+			'firstName',
+			'Please enter a first name.'
+		).notEmpty(),
+		check(
+			'lastName',
+			'Please enter a last name.'
+		).notEmpty(),
 	],
 	async (req, res) => {
 		const validationErrors = validationResult(req);
@@ -89,41 +93,61 @@ router.get('/', async (req, res) => {
  * @access  Private
  */
 
-router.put('/:id', async (req, res) => {
-	const { id } = req.params;
-	const { firstName, lastName } = req.body;
+router.put(
+	'/:id',
+	[
+		check(
+			'firstName',
+			'Please enter a first name.'
+		).notEmpty(),
+		check(
+			'lastName',
+			'Please enter a last name.'
+		).notEmpty(),
+	],
+	async (req, res) => {
+		const validationErrors = validationResult(req);
 
-	const techFields = {};
-
-	if (firstName) techFields.firstName = firstName;
-	if (lastName) techFields.lastName = lastName;
-
-	try {
-		// Query to see if tech exists already.
-		let tech = await TechDB.findById(id);
-
-		if (!tech) {
-			return res
-				.status(400)
-				.json({ message: 'Tech not found!' });
+		if (!validationErrors.isEmpty()) {
+			return res.status(400).json({
+				errors: validationErrors.array(),
+			});
 		}
+		const { id } = req.params;
+		const { firstName, lastName } = req.body;
 
-		tech = await TechDB.findByIdAndUpdate(
-			id,
-			{ $set: techFields },
-			{ new: true }
-		);
+		const techFields = {};
 
-		res.status(202).json({
-			message: 'Contact updated',
-		});
-	} catch (error) {
-		console.log(error);
-		res.status(500).json({
-			errors: 'Server Error.',
-		});
+		if (firstName) techFields.firstName = firstName;
+		if (lastName) techFields.lastName = lastName;
+
+		try {
+			// Query to see if tech exists already.
+			let tech = await TechDB.findById(id);
+
+			if (!tech) {
+				return res
+					.status(400)
+					.json({ message: 'Tech not found!' });
+			}
+
+			tech = await TechDB.findByIdAndUpdate(
+				id,
+				{ $set: techFields },
+				{ new: true }
+			);
+
+			res.status(202).json({
+				message: 'Contact updated',
+			});
+		} catch (error) {
+			console.log(error);
+			res.status(500).json({
+				errors: 'Server Error.',
+			});
+		}
 	}
-});
+);
 
 // SECTION: DELETE
 router.delete('/:id', async (req, res) => {
