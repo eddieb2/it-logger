@@ -33,7 +33,7 @@ export default function techReducer(
 			return {
 				...state,
 				techs: state.techs.filter(
-					(tech) => tech.id !== action.payload
+					(tech) => tech._id !== action.payload
 				),
 				loading: false,
 			};

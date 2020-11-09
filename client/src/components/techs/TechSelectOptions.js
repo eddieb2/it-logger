@@ -20,7 +20,7 @@ const TechSelectOptions = ({
 		techs !== null &&
 		techs.map((t) => (
 			<option
-				key={t.id}
+				key={t._id}
 				value={`${t.firstName} ${t.lastName}`}
 			>
 				{t.firstName} {t.lastName}

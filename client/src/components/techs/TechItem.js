@@ -7,11 +7,11 @@ import { connect } from 'react-redux';
 import { deleteTech } from '../../actions/techActions';
 
 const TechItem = ({
-	tech: { id, firstName, lastName },
+	tech: { _id, firstName, lastName },
 	deleteTech,
 }) => {
 	const onDelete = () => {
-		deleteTech(id);
+		deleteTech(_id);
 		M.toast({ html: 'Tech successfully deleted!' });
 	};
 

@@ -25,7 +25,7 @@ const TechListModal = ({
 						techs.map((tech) => (
 							<TechItem
 								tech={tech}
-								key={tech.id}
+								key={tech._id}
 							/>
 						))}
 				</ul>
