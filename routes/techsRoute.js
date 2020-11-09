@@ -58,7 +58,7 @@ router.post(
 				lastName,
 			});
 
-			const addedTech = tech.save();
+			const addedTech = await tech.save();
 
 			res.status(201).json({
 				message: 'User created.',
