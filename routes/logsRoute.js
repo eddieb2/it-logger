@@ -51,7 +51,8 @@ router.post(
 				tech,
 			});
 
-			const addedLog = newLog.save();
+			const addedLog = await newLog.save();
+			// const allLogs = await LogDB.find({});
 
 			res.status(201).json({
 				message: 'Log added.',
@@ -101,15 +102,14 @@ router.get('/', async (req, res) => {
 // NOTE this may need validation
 router.put('/:logid', async (req, res) => {
 	const { logid } = req.params;
-	const { message, tech, attention } = req.body;
-
-	console.log(attention);
+	const { message, tech, attention, date } = req.body;
 
 	const logFields = {};
 
 	if (message) logFields.message = message;
 	if (tech) logFields.tech = tech;
 	if (attention !== '') logFields.attention = attention;
+	if (date) logFields.date = date;
 
 	try {
 		let log = await LogDB.findById(logid);

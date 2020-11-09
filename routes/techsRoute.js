@@ -83,7 +83,7 @@ router.post(
 router.get('/', async (req, res) => {
 	try {
 		const techs = await TechDB.find({});
-		res.status(200).json({ message: techs });
+		res.status(200).json({ techs });
 	} catch (error) {
 		console.log(error.message);
 		res.status(400).json({ errors: 'Server error.' });
