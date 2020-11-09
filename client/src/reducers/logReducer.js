@@ -8,6 +8,7 @@ import {
 	CLEAR_CURRENT,
 	UPDATE_LOG,
 	SEARCH_LOGS,
+	CLEAR_FILTER,
 } from '../actions/types';
 
 const initialState = {
@@ -15,6 +16,7 @@ const initialState = {
 	current: null,
 	loading: false,
 	error: null,
+	filtered: null,
 };
 
 export default function logReducer(
@@ -55,7 +57,18 @@ export default function logReducer(
 		case SEARCH_LOGS:
 			return {
 				...state,
-				logs: action.payload,
+				filtered: state.logs.filter((log) => {
+					const regex = new RegExp(
+						`${action.payload}`,
+						'gi'
+					);
+					return log.message.match(regex);
+				}),
+			};
+		case CLEAR_FILTER:
+			return {
+				...state,
+				filtered: null,
 			};
 		case SET_CURRENT:
 			return {

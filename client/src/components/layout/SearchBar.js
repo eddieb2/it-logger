@@ -1,14 +1,33 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 // SECTION Redux
 import { connect } from 'react-redux';
-import { searchLogs } from '../../actions/logActions';
+import {
+	searchLogs,
+	clearFilter,
+} from '../../actions/logActions';
 
-const SearchBar = ({ searchLogs }) => {
+const SearchBar = ({
+	searchLogs,
+	filtered,
+	clearFilter,
+}) => {
 	const text = useRef('');
+
+	useEffect(() => {
+		if (filtered === null) {
+			text.current.value = '';
+		}
+		// eslint-disable-next-line
+	}, []);
+
 	const onChange = (e) => {
-		searchLogs(text.current.value);
+		if (text.current.value !== '') {
+			searchLogs(text.current.value);
+		} else {
+			clearFilter();
+		}
 	};
 
 	return (
@@ -35,7 +54,13 @@ const SearchBar = ({ searchLogs }) => {
 								search
 							</i>
 						</label>
-						<i className='material-icons'>
+						<i
+							className='material-icons'
+							onClick={() => {
+								text.current.value = '';
+								clearFilter();
+							}}
+						>
 							close
 						</i>
 					</div>
@@ -49,4 +74,11 @@ SearchBar.propTypes = {
 	searchLogs: PropTypes.func.isRequired,
 };
 
-export default connect(null, { searchLogs })(SearchBar);
+const mapStateToProps = (state) => ({
+	filtered: state.filtered,
+});
+
+export default connect(mapStateToProps, {
+	searchLogs,
+	clearFilter,
+})(SearchBar);

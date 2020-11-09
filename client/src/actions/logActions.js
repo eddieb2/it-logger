@@ -8,6 +8,8 @@ import {
 	CLEAR_CURRENT,
 	UPDATE_LOG,
 	SEARCH_LOGS,
+	CLEAR_FILTER,
+	CLEAR_LOGS,
 } from './types';
 
 export const getLogs = () => async (dispatch) => {
@@ -107,12 +109,10 @@ export const updateLog = (log) => async (dispatch) => {
 export const searchLogs = (text) => async (dispatch) => {
 	try {
 		setLoading();
-		const res = await fetch(`api/logs?q=${text}`);
-		const data = await res.json();
 
 		dispatch({
 			type: SEARCH_LOGS,
-			payload: data,
+			payload: text,
 		});
 	} catch (error) {
 		dispatch({
@@ -138,6 +138,13 @@ export const clearCurrent = () => {
 export const setLoading = () => {
 	return {
 		type: SET_LOADING,
+	};
+};
+
+// Clear Filter
+export const clearFilter = () => {
+	return {
+		type: CLEAR_FILTER,
 	};
 };
 
