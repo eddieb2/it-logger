@@ -39,7 +39,7 @@ export default function logReducer(
 			return {
 				...state,
 				logs: state.logs.filter(
-					(log) => log.id !== action.payload
+					(log) => log._id !== action.payload
 				),
 				loading: false,
 			};
@@ -47,7 +47,7 @@ export default function logReducer(
 			return {
 				...state,
 				logs: state.logs.map((log) =>
-					log.id === action.payload.id
+					log._id === action.payload._id
 						? action.payload
 						: log
 				),

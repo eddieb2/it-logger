@@ -13,12 +13,12 @@ import {
 export const getLogs = () => async (dispatch) => {
 	try {
 		setLoading();
-		const res = await fetch('/logs');
+		const res = await fetch('api/logs');
 		const data = await res.json();
 
 		dispatch({
 			type: GET_LOGS,
-			payload: data,
+			payload: data.logs,
 		});
 	} catch (error) {
 		dispatch({
@@ -32,7 +32,7 @@ export const addLog = (log) => async (dispatch) => {
 	try {
 		setLoading();
 
-		const res = await fetch('/logs', {
+		const res = await fetch('api/logs', {
 			method: 'POST',
 			body: JSON.stringify(log),
 			headers: {
@@ -44,7 +44,7 @@ export const addLog = (log) => async (dispatch) => {
 
 		dispatch({
 			type: ADD_LOG,
-			payload: data,
+			payload: data.log,
 		});
 	} catch (error) {
 		dispatch({
@@ -58,7 +58,7 @@ export const deleteLog = (id) => async (dispatch) => {
 	try {
 		setLoading();
 
-		await fetch(`/logs/${id}`, {
+		await fetch(`api/logs/${id}`, {
 			method: 'DELETE',
 		});
 
@@ -77,10 +77,14 @@ export const deleteLog = (id) => async (dispatch) => {
 export const updateLog = (log) => async (dispatch) => {
 	try {
 		setLoading();
-
-		const res = await fetch(`/logs/${log.id}`, {
+		const res = await fetch(`api/logs/${log._id}`, {
 			method: 'PUT',
-			body: JSON.stringify(log),
+			body: JSON.stringify({
+				attention: log.attention,
+				message: log.message,
+				tech: log.tech,
+				date: log.date,
+			}),
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -90,7 +94,7 @@ export const updateLog = (log) => async (dispatch) => {
 
 		dispatch({
 			type: UPDATE_LOG,
-			payload: data,
+			payload: data.log,
 		});
 	} catch (error) {
 		dispatch({
@@ -103,7 +107,7 @@ export const updateLog = (log) => async (dispatch) => {
 export const searchLogs = (text) => async (dispatch) => {
 	try {
 		setLoading();
-		const res = await fetch(`/logs?q=${text}`);
+		const res = await fetch(`api/logs?q=${text}`);
 		const data = await res.json();
 
 		dispatch({
