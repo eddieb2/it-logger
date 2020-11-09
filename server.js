@@ -18,12 +18,6 @@ app.listen(PORT, () => {
     ----------------------------`);
 });
 
-// app.get('/', (req, res) => {
-// 	res.send(`
-//         Welcome to the It Logger API!
-//     `);
-// });
-
 // SECTION Routes
 app.use('/api/logs', require('./routes/logsRoute'));
 app.use('/api/techs', require('./routes/techsRoute'));
