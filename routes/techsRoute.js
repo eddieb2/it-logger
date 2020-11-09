@@ -27,6 +27,8 @@ router.post(
 		).notEmpty(),
 	],
 	async (req, res) => {
+		////////////////////////////////////
+		// SECTION: Validation
 		const validationErrors = validationResult(req);
 
 		if (!validationErrors.isEmpty()) {
@@ -34,6 +36,7 @@ router.post(
 				errors: validationErrors.array(),
 			});
 		}
+		////////////////////////////////////
 
 		const { firstName, lastName } = req.body;
 
@@ -55,10 +58,11 @@ router.post(
 				lastName,
 			});
 
-			tech.save();
+			const addedTech = tech.save();
 
 			res.status(201).json({
 				message: 'User created.',
+				tech: addedTech,
 			});
 		} catch (error) {
 			console.log(error.message);
@@ -106,6 +110,8 @@ router.put(
 		).notEmpty(),
 	],
 	async (req, res) => {
+		////////////////////////////////////
+		// SECTION: Validation
 		const validationErrors = validationResult(req);
 
 		if (!validationErrors.isEmpty()) {
@@ -113,6 +119,8 @@ router.put(
 				errors: validationErrors.array(),
 			});
 		}
+		////////////////////////////////////
+
 		const { id } = req.params;
 		const { firstName, lastName } = req.body;
 
