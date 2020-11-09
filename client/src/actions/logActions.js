@@ -9,7 +9,6 @@ import {
 	UPDATE_LOG,
 	SEARCH_LOGS,
 	CLEAR_FILTER,
-	CLEAR_LOGS,
 } from './types';
 
 export const getLogs = () => async (dispatch) => {
