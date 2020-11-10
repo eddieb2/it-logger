@@ -18,6 +18,8 @@ import store from './store';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 
+import './app.css';
+
 function App() {
 	useEffect(() => {
 		// Init Materialize
@@ -40,7 +42,7 @@ function App() {
 						component={Register}
 					/>
 					<Route
-						path='login'
+						path='/login'
 						component={Login}
 					/>
 				</Router>
