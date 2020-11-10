@@ -11,7 +11,7 @@ const Navbar = () => {
 	return (
 		<nav style={{ marginBottom: '3%' }}>
 			<div
-				className='nav-wrapper'
+				className='nav-wrapper teal'
 				style={{ paddingLeft: '1%' }}
 			>
 				<a href='#!' className='brand-logo'>
